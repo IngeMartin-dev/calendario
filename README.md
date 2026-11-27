@@ -18,3 +18,11 @@ Agrega `?todos=1` a la dirección para ver todas las cajas abiertas. Para el reg
 ## Personalizar
 
 Los mensajes están en la lista `MSGS` dentro de `index.html`. Cada entrada es `[título, mensaje]`.
+
+## Fotos
+
+Cada caja puede mostrar una foto en formato polaroid. Guarda las fotos en la carpeta `fotos/` con estos nombres:
+
+`dia-01.jpg`, `dia-02.jpg`, ... `dia-28.jpg`
+
+Los días sin foto simplemente no muestran nada. Conviene reducirlas antes (unos 1200 px de ancho, menos de 400 KB cada una) para que carguen rápido.
