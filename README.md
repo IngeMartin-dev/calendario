@@ -1,6 +1,6 @@
 # Calendario de Adviento
 
-Regalo de 9 meses: 28 puertas, una por día, del 27 de noviembre al 24 de diciembre de 2026. Cada puerta se abre sola cuando llega su fecha.
+Regalo de 9 meses: 28 cajas, una por día, del 27 de noviembre al 24 de diciembre de 2026. cada caja se abre sola cuando llega su fecha.
 
 ## Cómo verlo
 

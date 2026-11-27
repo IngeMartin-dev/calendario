@@ -14,63 +14,81 @@
 *{box-sizing:border-box}
 body{
   margin:0; min-height:100vh; color:var(--cream); font-family:var(--sans); background-color:#2b0c17;
-  background-image:
-    radial-gradient(circle at 8% 14%,rgba(255,255,255,.55) 0 2px,transparent 3px),
-    radial-gradient(circle at 22% 6%,rgba(255,255,255,.4) 0 1.5px,transparent 3px),
-    radial-gradient(circle at 37% 22%,rgba(255,255,255,.5) 0 2px,transparent 3px),
-    radial-gradient(circle at 51% 9%,rgba(255,255,255,.35) 0 1.5px,transparent 3px),
-    radial-gradient(circle at 64% 19%,rgba(255,255,255,.55) 0 2px,transparent 3px),
-    radial-gradient(circle at 79% 8%,rgba(255,255,255,.4) 0 1.5px,transparent 3px),
-    radial-gradient(circle at 91% 17%,rgba(255,255,255,.5) 0 2px,transparent 3px),
-    radial-gradient(ellipse at 50% 0%,#5a1a2c 0%,#2b0c17 62%);
-  background-repeat:no-repeat;
+  background-image:radial-gradient(ellipse at 50% 0%,#5a1a2c 0%,#2b0c17 62%); background-repeat:no-repeat; background-attachment:fixed;
 }
-.garland{display:block;width:100%;height:70px}
-main{max-width:1100px;margin:0 auto;padding:8px 20px 64px;display:flex;flex-direction:column;gap:40px}
+.snow{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.snow i{position:absolute;top:-12px;width:var(--s);height:var(--s);border-radius:50%;background:rgba(255,255,255,.75);animation:fall var(--t) linear var(--d) infinite}
+@keyframes fall{to{transform:translate(var(--x),105vh)}}
+.garland{display:block;width:100%;height:70px;position:relative;z-index:1}
+main{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:8px 20px 64px;display:flex;flex-direction:column;gap:40px}
 header{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding-top:24px}
 .eyebrow{margin:0;font-size:14px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
 h1{margin:0;font-family:var(--serif);font-weight:700;font-size:clamp(40px,8vw,68px);line-height:1.02}
 .lead{margin:0;max-width:560px;font-size:18px;line-height:1.55;color:#ecd9c6}
 .count{margin:6px 0 0;padding:8px 18px;border:1px solid var(--accent);border-radius:999px;font-size:15px;font-weight:700;color:var(--accent)}
 .panel{position:relative;background:var(--cream);color:var(--ink);border-radius:22px;padding:36px 40px;box-shadow:0 18px 50px rgba(0,0,0,.4);display:flex;flex-direction:column;gap:14px}
-.panel .star{position:absolute;top:20px;right:24px}
+.panel .star{position:absolute;top:18px;right:22px;background:none;border:0;padding:6px;cursor:default;line-height:0}
 .panel .meta{margin:0;font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--wine)}
 .panel h2{margin:0;font-family:var(--serif);font-weight:700;font-size:clamp(30px,5vw,44px);line-height:1.1}
 .panel p.msg{margin:0;max-width:760px;font-size:19px;line-height:1.65;color:#4a2230}
-.panel.pop{animation:pop .35s ease}
-@keyframes pop{from{transform:translateY(8px);opacity:.4}to{transform:none;opacity:1}}
-h3{margin:0 0 18px;font-family:var(--serif);font-style:italic;font-weight:600;font-size:30px;color:var(--accent);text-align:center}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:16px}
-.door{
-  aspect-ratio:1/1.15;min-height:120px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:6px;padding:8px;cursor:pointer;font-family:var(--sans);color:var(--cream);transition:transform .15s ease;
+.panel.pop{animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:translateY(14px) scale(.97);opacity:.3}to{transform:none;opacity:1}}
+h3{margin:0 0 22px;font-family:var(--serif);font-style:italic;font-weight:600;font-size:30px;color:var(--accent);text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:22px 16px}
+.cell{position:relative}
+.box{
+  width:100%;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 4px 8px;border:0;background:none;
+  color:var(--cream);font-family:var(--sans);cursor:pointer;border-radius:16px;transition:transform .2s ease;
 }
-.door:hover:not(:disabled){transform:translateY(-3px)}
-.door:focus-visible{outline:3px solid var(--cream);outline-offset:3px}
-.door .n{font-family:var(--serif);font-weight:700;line-height:1}
-.door .d{font-size:12px;font-weight:600}
-.door.locked{background:#2a0d17;border:1px dashed #7d5260;cursor:not-allowed;color:#d9c3b0}
-.door.locked .n{font-size:26px}
-.door.fresh{border:2px solid var(--accent);box-shadow:0 0 18px rgba(233,189,111,.35)}
-.door.fresh.a{background:var(--wine)} .door.fresh.b{background:var(--green)}
-.door.fresh .n{font-size:40px;color:var(--accent)}
-.door.fresh .d{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--cream)}
-.door.opened{background:#4a1626;border:1px solid rgba(233,189,111,.5)}
-.door.opened .n{font-size:26px}
-.door.opened .d{color:#ecd9c6}
-.door.sel{outline:3px solid var(--cream);outline-offset:2px}
+.box svg.gift{width:100%;max-width:120px;height:auto;overflow:visible}
+.box .body{fill:var(--c)} .box .rib{fill:var(--r)} .box .lidr{fill:var(--c)}
+.box .lid{transform-box:fill-box;transform-origin:center bottom;transition:transform .6s cubic-bezier(.3,1.7,.5,1)}
+.box .glow{opacity:0;transition:opacity .5s ease}
+.box .lbl{display:flex;flex-direction:column;align-items:center;line-height:1.1}
+.box .lbl b{font-family:var(--serif);font-weight:700;font-size:26px}
+.box .lbl small{font-size:12px;font-weight:600;color:#ecd9c6}
+.box:hover:not(:disabled){transform:translateY(-4px)}
+.box:focus-visible{outline:3px solid var(--cream);outline-offset:2px}
+.box.locked{cursor:not-allowed;color:#d9c3b0}
+.box.locked svg.gift{filter:saturate(.25) brightness(.55)}
+.box.locked .lbl small{color:#d9c3b0}
+.box:not(.locked) .lk{display:none}
+.box.fresh svg.gift{filter:drop-shadow(0 0 10px rgba(233,189,111,.55));animation:wiggle 3.4s ease-in-out var(--delay) infinite}
+@keyframes wiggle{0%,82%,100%{transform:rotate(0)}86%{transform:rotate(-5deg)}90%{transform:rotate(5deg)}94%{transform:rotate(-3deg)}97%{transform:rotate(2deg)}}
+.box.opening .lid,.box.opened .lid{transform:translateY(-26px) rotate(-16deg)}
+.box.opening .glow,.box.opened .glow{opacity:1}
+.box.opening svg.gift{animation:hop .5s ease}
+@keyframes hop{40%{transform:translateY(-8px) scale(1.06)}}
+.box.sel{background:rgba(251,243,228,.1)}
+.sp{position:absolute;left:50%;top:34%;width:8px;height:8px;border-radius:50%;background:var(--sc);pointer-events:none;animation:burst .9s ease-out forwards}
+@keyframes burst{to{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}
+.flake{position:absolute;right:-12px;bottom:-12px;width:30px;height:30px;padding:0;border:0;background:none;cursor:pointer;opacity:.5;animation:twinkle 3s ease-in-out infinite;line-height:0}
+.flake:hover,.flake:focus-visible{opacity:1}
+@keyframes twinkle{50%{opacity:.18}}
 footer{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
 footer p{margin:0;font-family:var(--serif);font-style:italic;font-weight:600;font-size:26px}
+.veil{position:fixed;inset:0;z-index:10;background:rgba(20,5,10,.78);display:none;align-items:center;justify-content:center;padding:20px}
+.veil.on{display:flex;animation:fade .3s ease}
+@keyframes fade{from{opacity:0}}
+.secret{max-width:440px;background:var(--cream);color:var(--ink);border-radius:20px;padding:34px 30px;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+.secret p{margin:0;font-size:19px;line-height:1.6}
+.secret .tag{font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--wine)}
+.secret button{margin-top:6px;min-height:44px;padding:0 26px;border-radius:999px;border:0;background:var(--wine);color:var(--cream);font:700 15px var(--sans);cursor:pointer}
+.secret button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 @media (max-width:560px){
   .panel{padding:28px 22px}
-  .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-  .door{min-height:104px}
-  .door.fresh .n{font-size:32px}
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 10px}
 }
-@media (prefers-reduced-motion:reduce){.panel.pop{animation:none}.door{transition:none}}
+@media (prefers-reduced-motion:reduce){
+  .snow{display:none}
+  .box.fresh svg.gift,.box.opening svg.gift,.flake,.panel.pop,.secret{animation:none}
+  .box .lid{transition:none}
+}
 </style>
 </head>
 <body>
+
+<div class="snow" id="snow" aria-hidden="true"></div>
 
 <svg class="garland" aria-hidden="true" viewBox="0 0 1200 70" preserveAspectRatio="xMidYMin slice">
   <path d="M-10 8 Q150 62 300 14 T600 14 T900 14 T1210 8" fill="none" stroke="#e9bd6f" stroke-width="2"/>
@@ -83,21 +101,23 @@ footer p{margin:0;font-family:var(--serif);font-style:italic;font-weight:600;fon
 <main>
   <header>
     <svg aria-hidden="true" width="34" height="34" viewBox="0 0 24 24"><path d="M12 21l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.18L12 21z" fill="#c0344f"/></svg>
-    <p class="eyebrow">9 meses contigo</p>
-    <h1>Veintiocho días para ti</h1>
-    <p class="lead">Una puerta por día, desde hoy hasta Nochebuena. Cada una guarda algo mío para ti. Solo se abre cuando llega su fecha.</p>
+    <p class="eyebrow"><span id="nine">9</span> meses contigo</p>
+    <h1>Veintiocho cajitas para ti</h1>
+    <p class="lead">Una caja por día, desde hoy hasta Nochebuena. Cada una guarda algo mío para ti y solo se abre cuando llega su fecha.</p>
     <p class="count" id="count"></p>
   </header>
 
   <section class="panel" id="panel" aria-live="polite">
-    <svg class="star" aria-hidden="true" width="26" height="26" viewBox="0 0 24 24"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z" fill="#d49a2c"/></svg>
+    <button type="button" class="star" id="starBtn" aria-label="Estrella decorativa" tabindex="-1">
+      <svg aria-hidden="true" width="26" height="26" viewBox="0 0 24 24"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z" fill="#d49a2c"/></svg>
+    </button>
     <p class="meta" id="pMeta"></p>
     <h2 id="pTitle"></h2>
     <p class="msg" id="pText"></p>
   </section>
 
   <section>
-    <h3>Elige una puerta</h3>
+    <h3>Elige una caja</h3>
     <div class="grid" id="grid"></div>
   </section>
 
@@ -107,10 +127,19 @@ footer p{margin:0;font-family:var(--serif);font-style:italic;font-weight:600;fon
   </footer>
 </main>
 
+<div class="veil" id="veil" role="dialog" aria-modal="true" aria-labelledby="sTag">
+  <div class="secret">
+    <svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24"><path d="M12 21l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.18L12 21z" fill="#c0344f"/></svg>
+    <span class="tag" id="sTag">Secretito</span>
+    <p id="sText"></p>
+    <button type="button" id="sClose">Guardar el secreto</button>
+  </div>
+</div>
+
 <script>
 (function () {
-  // Calendario: 28 puertas, del 27 de noviembre al 24 de diciembre de 2026.
-  // Para probar todas las puertas abiertas: agrega ?todos=1 a la dirección.
+  // 28 cajas: del 27 de noviembre al 24 de diciembre de 2026.
+  // Para probar todas abiertas, agrega ?todos=1 a la dirección.
   var START = new Date(2026, 10, 27);
   var TOTAL = 28;
   var MONTHS = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
@@ -130,7 +159,7 @@ footer p{margin:0;font-family:var(--serif);font-style:italic;font-weight:600;fon
     ['Cupón de masaje', 'Vale por quince minutos de masaje. Canjeable cuando el día te haya pesado.'],
     ['Una pregunta', '¿En qué momento supiste que esto era especial? Cuéntamelo hoy, quiero guardar tu respuesta.'],
     ['Cupón de cita sorpresa', 'Vale por una cita planeada por mí. Tú solo tienes que arreglarte y dejarte llevar.'],
-    ['Vamos por la mitad', 'Ya llevamos la mitad del calendario. Cada puerta es una excusa para decirte cuánto te quiero.'],
+    ['Vamos por la mitad', 'Ya llevamos la mitad del calendario. Cada caja es una excusa para decirte cuánto te quiero.'],
     ['Para el próximo año', 'Escribe en un papel algo que quieras que hagamos juntos el próximo año. Lo guardamos para cumplirlo.'],
     ['Cupón de postre', 'Vale por tu postre favorito, conseguido por mí. Sin importar la hora.'],
     ['Paciencia con ternura', 'Contigo aprendí que la paciencia también puede ser tierna. Gracias por enseñármelo sin darte cuenta.'],
@@ -147,54 +176,159 @@ footer p{margin:0;font-family:var(--serif);font-style:italic;font-weight:600;fon
     ['Feliz Nochebuena', 'Nueve meses y un calendario después, mi regalo sigue siendo el mismo: quedarme contigo. Ahora sí, lee en voz alta el papel del primer día.']
   ];
 
+  // Combinaciones de colores de las cajas: [caja, cinta]
+  var COLORS = [['#8b2339','#e9bd6f'], ['#1f4d3f','#fbf3e4'], ['#fbf3e4','#c0344f'], ['#d49a2c','#8b2339']];
+
+  // Secretos: copos escondidos entre cajas (índice de la caja a cuya esquina se asoman).
+  var FLAKES = [4, 11, 19];
+
   var unlockAll = /[?&]todos=1/.test(location.search);
-  var KEY = 'adviento-9-meses-abiertas';
-  var opened = {};
-  try { opened = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { opened = {}; }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(opened)); } catch (e) {} }
+  var KEY = 'adviento-9-meses-v2';
+  var store = { opened: {}, last: null, flakes: {} };
+  try { var raw = JSON.parse(localStorage.getItem(KEY) || 'null'); if (raw) store = raw; } catch (e) {}
+  store.opened = store.opened || {}; store.flakes = store.flakes || {};
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
 
   function todayIndex() {
     var n = new Date();
-    var t = new Date(n.getFullYear(), n.getMonth(), n.getDate());
-    return Math.round((t - START) / 86400000);
+    return Math.round((new Date(n.getFullYear(), n.getMonth(), n.getDate()) - START) / 86400000);
   }
   function isUnlocked(i) { return unlockAll || todayIndex() >= i; }
   function longDate(i) { var d = new Date(2026, 10, 27 + i); return d.getDate() + ' de ' + MONTHS_LONG[d.getMonth()]; }
   function shortDate(i) { var d = new Date(2026, 10, 27 + i); return d.getDate() + ' ' + MONTHS[d.getMonth()]; }
 
-  var selected = Math.max(0, Math.min(TOTAL - 1, todayIndex()));
+  var selected = (store.last !== null && store.opened[store.last] && isUnlocked(store.last)) ? store.last : null;
   var grid = document.getElementById('grid');
+  var boxes = [];
 
-  var LOCK = '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d9c3b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
-  var HEART = '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><path d="M12 21l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.18L12 21z" fill="#c0344f"/></svg>';
+  // ---------- Nieve ----------
+  var snow = document.getElementById('snow');
+  for (var s = 0; s < 22; s++) {
+    var f = document.createElement('i');
+    f.style.left = ((s * 47) % 100) + '%';
+    f.style.setProperty('--s', (3 + (s % 4)) + 'px');
+    f.style.setProperty('--t', (9 + (s % 7) * 2) + 's');
+    f.style.setProperty('--d', '-' + ((s * 1.7) % 14).toFixed(1) + 's');
+    f.style.setProperty('--x', ((s % 2 ? 1 : -1) * (20 + (s % 5) * 12)) + 'px');
+    snow.appendChild(f);
+  }
 
-  function renderGrid() {
-    grid.innerHTML = '';
+  // ---------- Cajas ----------
+  function giftSVG() {
+    return '<svg class="gift" viewBox="0 0 100 100" aria-hidden="true">' +
+      '<ellipse class="glow" cx="50" cy="48" rx="30" ry="9" fill="#ffe9a8"/>' +
+      '<rect class="body" x="14" y="46" width="72" height="44" rx="4"/>' +
+      '<rect class="rib" x="44" y="46" width="12" height="44"/>' +
+      '<g class="lk" transform="translate(41 58)" fill="none" stroke="#d9c3b0" stroke-width="2.4" stroke-linecap="round"><rect x="1" y="9" width="16" height="12" rx="2" fill="#2a0d17"/><path d="M4 9V6a5 5 0 0 1 10 0v3"/></g>' +
+      '<g class="lid">' +
+        '<rect class="lidr" x="8" y="32" width="84" height="16" rx="4"/>' +
+        '<rect class="rib" x="44" y="32" width="12" height="16"/>' +
+        '<path class="rib" d="M50 30C40 10 24 18 34 28c4 4 11 3 16 2z"/>' +
+        '<path class="rib" d="M50 30C60 10 76 18 66 28c-4 4-11 3-16 2z"/>' +
+        '<circle class="rib" cx="50" cy="29" r="5"/>' +
+      '</g></svg>';
+  }
+
+  function openSecret(tag, text) {
+    document.getElementById('sTag').textContent = tag;
+    document.getElementById('sText').textContent = text;
+    document.getElementById('veil').classList.add('on');
+    document.getElementById('sClose').focus();
+  }
+  document.getElementById('sClose').addEventListener('click', function () {
+    document.getElementById('veil').classList.remove('on');
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') document.getElementById('veil').classList.remove('on');
+  });
+
+  function buildGrid() {
     for (var i = 0; i < TOTAL; i++) {
       (function (i) {
-        var un = isUnlocked(i);
-        var op = un && (opened[i] || i === selected);
+        var cell = document.createElement('div');
+        cell.className = 'cell';
         var b = document.createElement('button');
         b.type = 'button';
-        var cls = 'door ' + (!un ? 'locked' : (!op ? 'fresh ' + (i % 2 === 0 ? 'a' : 'b') : 'opened'));
-        if (i === selected) cls += ' sel';
-        b.className = cls;
-        b.disabled = !un;
-        b.setAttribute('aria-label', un ? 'Día ' + (i + 1) + ', ' + shortDate(i) + ', abrir' : 'Día ' + (i + 1) + ', se abre el ' + shortDate(i));
-        if (!un) b.innerHTML = LOCK + '<span class="n">' + (i + 1) + '</span><span class="d">' + shortDate(i) + '</span>';
-        else if (!op) b.innerHTML = '<span class="n">' + (i + 1) + '</span><span class="d">Abrir</span>';
-        else b.innerHTML = HEART + '<span class="n">' + (i + 1) + '</span><span class="d">' + shortDate(i) + '</span>';
+        var c = COLORS[i % COLORS.length];
+        b.style.setProperty('--c', c[0]);
+        b.style.setProperty('--r', c[1]);
+        b.style.setProperty('--delay', ((i * 0.37) % 3).toFixed(2) + 's');
+        b.innerHTML = giftSVG() + '<span class="lbl"><b>' + (i + 1) + '</b><small>' + shortDate(i) + '</small></span>';
         b.addEventListener('click', function () { pick(i); });
-        grid.appendChild(b);
+        cell.appendChild(b);
+        if (FLAKES.indexOf(i) !== -1) {
+          var fl = document.createElement('button');
+          fl.type = 'button';
+          fl.className = 'flake';
+          fl.setAttribute('aria-label', 'Un copo de nieve');
+          fl.innerHTML = '<svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fbf3e4" stroke-width="1.6" stroke-linecap="round"><path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9M9.5 4.5L12 7l2.5-2.5M9.5 19.5L12 17l2.5 2.5"/></svg>';
+          fl.addEventListener('click', function () { foundFlake(i); });
+          cell.appendChild(fl);
+        }
+        grid.appendChild(cell);
+        boxes.push(b);
       })(i);
     }
   }
 
+  function refresh() {
+    boxes.forEach(function (b, i) {
+      var un = isUnlocked(i);
+      var op = un && store.opened[i];
+      var cls = 'box ' + (!un ? 'locked' : (!op ? 'fresh' : 'opened'));
+      if (i === selected) cls += ' sel';
+      if (b.classList.contains('opening')) cls += ' opening';
+      b.className = cls;
+      b.disabled = !un;
+      b.setAttribute('aria-label', un ? 'Caja ' + (i + 1) + ', ' + shortDate(i) + (op ? ', abierta' : ', abrir') : 'Caja ' + (i + 1) + ', se abre el ' + shortDate(i));
+    });
+  }
+
+  function burst(cell) {
+    var cols = ['#e9bd6f', '#fbf3e4', '#c0344f', '#ffe9a8'];
+    for (var k = 0; k < 14; k++) {
+      var p = document.createElement('i');
+      p.className = 'sp';
+      var a = (k / 14) * Math.PI * 2;
+      var r = 55 + (k % 3) * 18;
+      p.style.setProperty('--dx', Math.round(Math.cos(a) * r) + 'px');
+      p.style.setProperty('--dy', Math.round(Math.sin(a) * r - 10) + 'px');
+      p.style.setProperty('--sc', cols[k % cols.length]);
+      cell.appendChild(p);
+      (function (p) { setTimeout(function () { if (p.parentNode) p.parentNode.removeChild(p); }, 950); })(p);
+    }
+  }
+
+  function pick(i) {
+    if (!isUnlocked(i)) return;
+    var b = boxes[i];
+    if (store.opened[i]) { selected = i; store.last = i; save(); refresh(); renderPanel(true); return; }
+    b.classList.add('opening');
+    burst(b.parentNode);
+    setTimeout(function () {
+      b.classList.remove('opening');
+      store.opened[i] = true; store.last = i; selected = i; save();
+      refresh(); renderPanel(true);
+    }, 550);
+  }
+
+  // ---------- Panel ----------
   function renderPanel(animate) {
-    var un = isUnlocked(selected);
-    document.getElementById('pMeta').textContent = 'Día ' + (selected + 1) + ' · ' + longDate(selected);
-    document.getElementById('pTitle').textContent = un ? MSGS[selected][0] : 'Todavía no';
-    document.getElementById('pText').textContent = un ? MSGS[selected][1] : 'Esta puerta se abre el ' + longDate(selected) + '. Un poquito de paciencia, que vale la pena.';
+    var meta = document.getElementById('pMeta'), t = document.getElementById('pTitle'), x = document.getElementById('pText');
+    if (selected === null) {
+      meta.textContent = 'Tu calendario';
+      if (todayIndex() < 0) {
+        t.textContent = 'Todavía no empieza';
+        x.textContent = 'Tu primera caja se abre el 27 de noviembre. Ya casi.';
+      } else {
+        t.textContent = 'Toca una caja que brille';
+        x.textContent = 'Cada día se abre una nueva. La de hoy ya te está esperando.';
+      }
+    } else {
+      meta.textContent = 'Día ' + (selected + 1) + ' · ' + longDate(selected);
+      t.textContent = MSGS[selected][0];
+      x.textContent = MSGS[selected][1];
+    }
     var p = document.getElementById('panel');
     if (animate) { p.classList.remove('pop'); void p.offsetWidth; p.classList.add('pop'); }
   }
@@ -208,17 +342,46 @@ footer p{margin:0;font-family:var(--serif);font-style:italic;font-weight:600;fon
     document.getElementById('count').textContent = t;
   }
 
-  function pick(i) {
-    if (!isUnlocked(i)) return;
-    selected = i;
-    opened[i] = true;
-    save();
-    renderGrid();
-    renderPanel(true);
+  // ---------- Secretos ----------
+  function foundFlake(i) {
+    store.flakes[i] = true; save();
+    var n = Object.keys(store.flakes).length;
+    if (n >= FLAKES.length) {
+      openSecret('Secreto 3 de 3', 'Encontraste los tres copos. Vale por un deseo: pídeme lo que quieras y yo lo cumplo, dentro de lo posible.');
+    } else if (n === 1) {
+      openSecret('Secreto ' + n + ' de 3', 'Escondí este para ti en medio del calendario. Eres lo mejor que me pasó este año. Hay más copos.');
+    } else {
+      openSecret('Secreto ' + n + ' de 3', 'Ya sabes que me gusta esconderte cosas. Falta uno.');
+    }
   }
 
+  function tapper(el, times, fn) {
+    var n = 0, timer = null;
+    el.addEventListener('click', function () {
+      n++; clearTimeout(timer);
+      timer = setTimeout(function () { n = 0; }, 2000);
+      if (n >= times) { n = 0; fn(); }
+    });
+  }
+  tapper(document.getElementById('nine'), 9, function () {
+    openSecret('Secreto', 'Nueve toques para nueve meses. Encontraste el primero: hoy te debo un beso largo, de esos con los ojos cerrados.');
+  });
+  tapper(document.getElementById('starBtn'), 5, function () {
+    openSecret('Secreto', 'Esta estrella es la que mira cuando pides un deseo. Pídelo ahora, que yo estoy en el mismo equipo.');
+  });
+  var typed = '';
+  document.addEventListener('keydown', function (e) {
+    if (e.key.length !== 1) return;
+    typed = (typed + e.key.toLowerCase()).slice(-12);
+    if (/te quiero$|te amo$/.test(typed)) {
+      typed = '';
+      openSecret('Secreto', 'Yo también. Y esta vez no vale discutir quién quiere más.');
+    }
+  });
+
   renderCount();
-  renderGrid();
+  buildGrid();
+  refresh();
   renderPanel(false);
 })();
 </script>
