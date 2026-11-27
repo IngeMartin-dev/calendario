@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calendario de Adviento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#e9bd6f; --cream:#fbf3e4; --wine:#8b2339; --green:#1f4d3f; --ink:#3a1422;
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Nunito Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; color:var(--cream); font-family:var(--sans); background-color:#2b0c17;
+  background-image:
+    radial-gradient(circle at 8% 14%,rgba(255,255,255,.55) 0 2px,transparent 3px),
+    radial-gradient(circle at 22% 6%,rgba(255,255,255,.4) 0 1.5px,transparent 3px),
+    radial-gradient(circle at 37% 22%,rgba(255,255,255,.5) 0 2px,transparent 3px),
+    radial-gradient(circle at 51% 9%,rgba(255,255,255,.35) 0 1.5px,transparent 3px),
+    radial-gradient(circle at 64% 19%,rgba(255,255,255,.55) 0 2px,transparent 3px),
+    radial-gradient(circle at 79% 8%,rgba(255,255,255,.4) 0 1.5px,transparent 3px),
+    radial-gradient(circle at 91% 17%,rgba(255,255,255,.5) 0 2px,transparent 3px),
+    radial-gradient(ellipse at 50% 0%,#5a1a2c 0%,#2b0c17 62%);
+  background-repeat:no-repeat;
+}
+.garland{display:block;width:100%;height:70px}
+main{max-width:1100px;margin:0 auto;padding:8px 20px 64px;display:flex;flex-direction:column;gap:40px}
+header{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding-top:24px}
+.eyebrow{margin:0;font-size:14px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent)}
+h1{margin:0;font-family:var(--serif);font-weight:700;font-size:clamp(40px,8vw,68px);line-height:1.02}
+.lead{margin:0;max-width:560px;font-size:18px;line-height:1.55;color:#ecd9c6}
+.count{margin:6px 0 0;padding:8px 18px;border:1px solid var(--accent);border-radius:999px;font-size:15px;font-weight:700;color:var(--accent)}
+.panel{position:relative;background:var(--cream);color:var(--ink);border-radius:22px;padding:36px 40px;box-shadow:0 18px 50px rgba(0,0,0,.4);display:flex;flex-direction:column;gap:14px}
+.panel .star{position:absolute;top:20px;right:24px}
+.panel .meta{margin:0;font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--wine)}
+.panel h2{margin:0;font-family:var(--serif);font-weight:700;font-size:clamp(30px,5vw,44px);line-height:1.1}
+.panel p.msg{margin:0;max-width:760px;font-size:19px;line-height:1.65;color:#4a2230}
+.panel.pop{animation:pop .35s ease}
+@keyframes pop{from{transform:translateY(8px);opacity:.4}to{transform:none;opacity:1}}
+h3{margin:0 0 18px;font-family:var(--serif);font-style:italic;font-weight:600;font-size:30px;color:var(--accent);text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:16px}
+.door{
+  aspect-ratio:1/1.15;min-height:120px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:6px;padding:8px;cursor:pointer;font-family:var(--sans);color:var(--cream);transition:transform .15s ease;
+}
+.door:hover:not(:disabled){transform:translateY(-3px)}
+.door:focus-visible{outline:3px solid var(--cream);outline-offset:3px}
+.door .n{font-family:var(--serif);font-weight:700;line-height:1}
+.door .d{font-size:12px;font-weight:600}
+.door.locked{background:#2a0d17;border:1px dashed #7d5260;cursor:not-allowed;color:#d9c3b0}
+.door.locked .n{font-size:26px}
+.door.fresh{border:2px solid var(--accent);box-shadow:0 0 18px rgba(233,189,111,.35)}
+.door.fresh.a{background:var(--wine)} .door.fresh.b{background:var(--green)}
+.door.fresh .n{font-size:40px;color:var(--accent)}
+.door.fresh .d{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--cream)}
+.door.opened{background:#4a1626;border:1px solid rgba(233,189,111,.5)}
+.door.opened .n{font-size:26px}
+.door.opened .d{color:#ecd9c6}
+.door.sel{outline:3px solid var(--cream);outline-offset:2px}
+footer{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+footer p{margin:0;font-family:var(--serif);font-style:italic;font-weight:600;font-size:26px}
+@media (max-width:560px){
+  .panel{padding:28px 22px}
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .door{min-height:104px}
+  .door.fresh .n{font-size:32px}
+}
+@media (prefers-reduced-motion:reduce){.panel.pop{animation:none}.door{transition:none}}
+</style>
+</head>
+<body>
+
+<svg class="garland" aria-hidden="true" viewBox="0 0 1200 70" preserveAspectRatio="xMidYMin slice">
+  <path d="M-10 8 Q150 62 300 14 T600 14 T900 14 T1210 8" fill="none" stroke="#e9bd6f" stroke-width="2"/>
+  <circle cx="75" cy="38" r="8" fill="#c0344f"/><circle cx="225" cy="40" r="8" fill="#e9bd6f"/>
+  <circle cx="375" cy="34" r="8" fill="#2f7a63"/><circle cx="525" cy="30" r="8" fill="#c0344f"/>
+  <circle cx="675" cy="30" r="8" fill="#e9bd6f"/><circle cx="825" cy="34" r="8" fill="#2f7a63"/>
+  <circle cx="975" cy="40" r="8" fill="#c0344f"/><circle cx="1125" cy="38" r="8" fill="#e9bd6f"/>
+</svg>
+
+<main>
+  <header>
+    <svg aria-hidden="true" width="34" height="34" viewBox="0 0 24 24"><path d="M12 21l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.18L12 21z" fill="#c0344f"/></svg>
+    <p class="eyebrow">9 meses contigo</p>
+    <h1>Veintiocho días para ti</h1>
+    <p class="lead">Una puerta por día, desde hoy hasta Nochebuena. Cada una guarda algo mío para ti. Solo se abre cuando llega su fecha.</p>
+    <p class="count" id="count"></p>
+  </header>
+
+  <section class="panel" id="panel" aria-live="polite">
+    <svg class="star" aria-hidden="true" width="26" height="26" viewBox="0 0 24 24"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z" fill="#d49a2c"/></svg>
+    <p class="meta" id="pMeta"></p>
+    <h2 id="pTitle"></h2>
+    <p class="msg" id="pText"></p>
+  </section>
+
+  <section>
+    <h3>Elige una puerta</h3>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <footer>
+    <svg aria-hidden="true" width="120" height="16" viewBox="0 0 120 16"><path d="M2 8h44M74 8h44" stroke="#e9bd6f" stroke-width="1.5" stroke-linecap="round"/><path d="M60 1l1.6 5.4L67 8l-5.4 1.6L60 15l-1.6-5.4L53 8l5.4-1.6z" fill="#e9bd6f"/></svg>
+    <p>Con todo mi amor, por nuestros 9 meses</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  // Calendario: 28 puertas, del 27 de noviembre al 24 de diciembre de 2026.
+  // Para probar todas las puertas abiertas: agrega ?todos=1 a la dirección.
+  var START = new Date(2026, 10, 27);
+  var TOTAL = 28;
+  var MONTHS = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  var MONTHS_LONG = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+  var MSGS = [
+    ['Hoy empieza nuestra cuenta regresiva', 'Hace nueve meses empezó mi historia favorita, y quise celebrarla como mereces: con una sorpresa para cada día hasta Nochebuena. Tu primera misión es escribir en un papel tres cosas que más te gustan de estos nueve meses y guardarlo. El 24 de diciembre lo leemos juntos.'],
+    ['Cupón de abrazo largo', 'Vale por un abrazo de esos que no se acaban. Canjeable hoy, sin límite de tiempo y sin preguntas.'],
+    ['Lo que más me gusta', 'Me encanta cómo te ríes cuando algo te sorprende de verdad. Búscame hoy para que lo vuelva a ver de cerca.'],
+    ['Nuestra canción', 'Escoge hoy una canción que describa nuestros 9 meses y mándamela. Yo escojo otra y las escuchamos juntos.'],
+    ['Cupón de película', 'Vale por elegir tú la película de hoy, sin quejas y con tu snack favorito.'],
+    ['Gracias', 'Gracias por quedarte en los días buenos y también en los difíciles. Contigo hasta lo normal se siente especial.'],
+    ['Tu foto favorita', 'Mándame la foto de nosotros que más te gusta y cuéntame por qué. Quiero saber qué ves tú.'],
+    ['Cupón de desayuno', 'Vale por un desayuno preparado por mí. Tú eliges el menú, yo pongo el esfuerzo.'],
+    ['Un deseo', 'Pide esta noche un deseo para nosotros. Yo pido el mío y algún día nos contamos si se cumplieron.'],
+    ['Los detalles', 'Hoy fíjate en algo pequeño que hago por ti. Hay más de los que crees, y los hago con gusto.'],
+    ['Cupón de masaje', 'Vale por quince minutos de masaje. Canjeable cuando el día te haya pesado.'],
+    ['Una pregunta', '¿En qué momento supiste que esto era especial? Cuéntamelo hoy, quiero guardar tu respuesta.'],
+    ['Cupón de cita sorpresa', 'Vale por una cita planeada por mí. Tú solo tienes que arreglarte y dejarte llevar.'],
+    ['Vamos por la mitad', 'Ya llevamos la mitad del calendario. Cada puerta es una excusa para decirte cuánto te quiero.'],
+    ['Para el próximo año', 'Escribe en un papel algo que quieras que hagamos juntos el próximo año. Lo guardamos para cumplirlo.'],
+    ['Cupón de postre', 'Vale por tu postre favorito, conseguido por mí. Sin importar la hora.'],
+    ['Paciencia con ternura', 'Contigo aprendí que la paciencia también puede ser tierna. Gracias por enseñármelo sin darte cuenta.'],
+    ['Cupón sin celulares', 'Vale por una noche sin pantallas, solo tú, yo y buena conversación.'],
+    ['Un lugar', '¿Qué lugar quieres que conozcamos juntos? Escríbelo hoy, yo lo anoto en mi lista.'],
+    ['Todavía me emociona', 'Nueve meses después, todavía me emociona verte llegar. Que nunca se me quite.'],
+    ['Cupón de plan', 'Vale por elegir el plan del fin de semana completo. Yo solo acompaño.'],
+    ['Un secreto bonito', 'Cuéntame hoy algo bonito que nunca me hayas dicho. Prometo guardarlo bien.'],
+    ['Cupón de carta', 'Vale por una carta escrita a mano por mí. Llegará cuando menos lo esperes.'],
+    ['Ya casi', 'Faltan pocos días para Nochebuena y mi parte favorita del día sigue siendo escribirte.'],
+    ['Cupón de foto', 'Vale por una sesión de fotos nuestras, bien arregladitos, para guardar este diciembre.'],
+    ['Nuestro primer recuerdo', 'Busca una de nuestras primeras fotos y cuéntame qué sentías ese día. Yo te cuento lo mío.'],
+    ['Cocinemos juntos', 'Hoy preparamos algo rico entre los dos. No importa si se quema, importa que sea contigo.'],
+    ['Feliz Nochebuena', 'Nueve meses y un calendario después, mi regalo sigue siendo el mismo: quedarme contigo. Ahora sí, lee en voz alta el papel del primer día.']
+  ];
+
+  var unlockAll = /[?&]todos=1/.test(location.search);
+  var KEY = 'adviento-9-meses-abiertas';
+  var opened = {};
+  try { opened = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { opened = {}; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(opened)); } catch (e) {} }
+
+  function todayIndex() {
+    var n = new Date();
+    var t = new Date(n.getFullYear(), n.getMonth(), n.getDate());
+    return Math.round((t - START) / 86400000);
+  }
+  function isUnlocked(i) { return unlockAll || todayIndex() >= i; }
+  function longDate(i) { var d = new Date(2026, 10, 27 + i); return d.getDate() + ' de ' + MONTHS_LONG[d.getMonth()]; }
+  function shortDate(i) { var d = new Date(2026, 10, 27 + i); return d.getDate() + ' ' + MONTHS[d.getMonth()]; }
+
+  var selected = Math.max(0, Math.min(TOTAL - 1, todayIndex()));
+  var grid = document.getElementById('grid');
+
+  var LOCK = '<svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#d9c3b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+  var HEART = '<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><path d="M12 21l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.18L12 21z" fill="#c0344f"/></svg>';
+
+  function renderGrid() {
+    grid.innerHTML = '';
+    for (var i = 0; i < TOTAL; i++) {
+      (function (i) {
+        var un = isUnlocked(i);
+        var op = un && (opened[i] || i === selected);
+        var b = document.createElement('button');
+        b.type = 'button';
+        var cls = 'door ' + (!un ? 'locked' : (!op ? 'fresh ' + (i % 2 === 0 ? 'a' : 'b') : 'opened'));
+        if (i === selected) cls += ' sel';
+        b.className = cls;
+        b.disabled = !un;
+        b.setAttribute('aria-label', un ? 'Día ' + (i + 1) + ', ' + shortDate(i) + ', abrir' : 'Día ' + (i + 1) + ', se abre el ' + shortDate(i));
+        if (!un) b.innerHTML = LOCK + '<span class="n">' + (i + 1) + '</span><span class="d">' + shortDate(i) + '</span>';
+        else if (!op) b.innerHTML = '<span class="n">' + (i + 1) + '</span><span class="d">Abrir</span>';
+        else b.innerHTML = HEART + '<span class="n">' + (i + 1) + '</span><span class="d">' + shortDate(i) + '</span>';
+        b.addEventListener('click', function () { pick(i); });
+        grid.appendChild(b);
+      })(i);
+    }
+  }
+
+  function renderPanel(animate) {
+    var un = isUnlocked(selected);
+    document.getElementById('pMeta').textContent = 'Día ' + (selected + 1) + ' · ' + longDate(selected);
+    document.getElementById('pTitle').textContent = un ? MSGS[selected][0] : 'Todavía no';
+    document.getElementById('pText').textContent = un ? MSGS[selected][1] : 'Esta puerta se abre el ' + longDate(selected) + '. Un poquito de paciencia, que vale la pena.';
+    var p = document.getElementById('panel');
+    if (animate) { p.classList.remove('pop'); void p.offsetWidth; p.classList.add('pop'); }
+  }
+
+  function renderCount() {
+    var idx = todayIndex(), left = Math.max(0, TOTAL - 1 - idx), t;
+    if (idx < 0) t = 'El calendario empieza el 27 de noviembre';
+    else if (left === 0) t = 'Hoy es Nochebuena';
+    else if (left === 1) t = 'Falta 1 día para Nochebuena';
+    else t = 'Faltan ' + left + ' días para Nochebuena';
+    document.getElementById('count').textContent = t;
+  }
+
+  function pick(i) {
+    if (!isUnlocked(i)) return;
+    selected = i;
+    opened[i] = true;
+    save();
+    renderGrid();
+    renderPanel(true);
+  }
+
+  renderCount();
+  renderGrid();
+  renderPanel(false);
+})();
+</script>
+</body>
+</html>
